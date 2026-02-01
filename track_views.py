@@ -3,7 +3,7 @@ import csv
 import os
 from datetime import datetime
 
-API_KEY = os.environ["AIzaSyCTaF_DFd6q1x99yllqXC4twYd6KB13XfU"]
+API_KEY = os.environ["YOUTUBE_API_KEY"]
 VIDEO_ID = "PltUK8r4sjw"
 
 URL = "https://www.googleapis.com/youtube/v3/videos"
