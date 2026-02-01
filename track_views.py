@@ -18,7 +18,7 @@ response = requests.get(URL, params=params)
 data = response.json()
 
 views = data["items"][0]["statistics"]["viewCount"]
-time_now = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+time_now = datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%d %H:%M:%S")
 
 file_exists = os.path.isfile("views.csv")
 
