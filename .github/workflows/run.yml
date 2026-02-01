@@ -2,15 +2,18 @@ name: YouTube View Tracker
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "*/5 * * * *"  
   workflow_dispatch:
 
 jobs:
   track:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true   # IMPORTANT
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -25,8 +28,11 @@ jobs:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: python track_views.py
 
-      - name: Upload views CSV
-        uses: actions/upload-artifact@v4
-        with:
-          name: youtube-views
-          path: views.csv
+      - name: Commit and push views.csv
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add views.csv
+          git commit -m "Update views.csv" || echo "No changes to commit"
+          git push
