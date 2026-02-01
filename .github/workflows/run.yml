@@ -2,8 +2,8 @@ name: YouTube View Tracker
 
 on:
   schedule:
-    - cron: "* * * * *"
-  workflow_dispatch:      # allows manual run
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
 
 jobs:
   track:
@@ -24,3 +24,9 @@ jobs:
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: python track_views.py
+
+      - name: Upload views CSV
+        uses: actions/upload-artifact@v4
+        with:
+          name: youtube-views
+          path: views.csv
