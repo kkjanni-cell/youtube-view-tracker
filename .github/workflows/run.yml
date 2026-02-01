@@ -1,0 +1,34 @@
+name: YouTube View Tracker
+
+on:
+  schedule:
+    - cron: "* * * * *"
+  workflow_dispatch:      # allows manual run
+
+jobs:
+  track:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run tracker
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: python track_views.py
+
+      - name: Save results
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add views.csv
+          git commit -m "Update views" || echo "No changes"
+          git push
