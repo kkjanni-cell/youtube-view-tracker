@@ -2,6 +2,7 @@ import requests
 import csv
 import os
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 API_KEY = os.environ["YOUTUBE_API_KEY"]
 VIDEO_ID = "PltUK8r4sjw"
